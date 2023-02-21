@@ -85,7 +85,7 @@ public class HomeController {
   }
 
   // ****************************READ ALL**********************************
-  @RequestMapping("/books")
+  @GetMapping("/books")
   public String entryPage(Model model, HttpSession session) {
     if (session.getAttribute("userId") == null) {
       return "redirect:/";
@@ -104,8 +104,7 @@ public class HomeController {
     return "redirect:/";
   }
 
-  // ************************************* */ CREATE
-  // **********************************************
+  // ************************************* */ CREATE  // **********************************************
 
   @PostMapping("/createbook")
   public String makeBook(@Valid @ModelAttribute("book") Book book, BindingResult result) {
@@ -125,11 +124,13 @@ public class HomeController {
     return "new.jsp";
   }
 
-  // **************************************** UPDATE
-  // ***********************************************
+  // **************************************** UPDATE  // ***********************************************
 
-  @RequestMapping("/books/{id}/edit")
-  public String showOne(@PathVariable("id")Long id, Model model){
+  @GetMapping("/books/{id}/edit")
+  public String showOne(@PathVariable("id")Long id, Model model, HttpSession session){
+    if(session.getAttribute("userId")==null){
+      return "redirect:/";
+    }
     Book book = bookService.oneBook(id);
     model.addAttribute("book", book);
     return "edit.jsp";
@@ -150,8 +151,11 @@ public class HomeController {
 
 
   // ******************************READ ONE***********************
-  @RequestMapping("/books/{id}")
-  public String oneBook(@PathVariable("id")Long id, Model model){
+  @GetMapping("/books/{id}")
+  public String oneBook(@PathVariable("id")Long id, Model model, HttpSession session){
+    if(session.getAttribute("userId")==null){
+      return "redirect:/";
+    }
     Book book = bookService.oneBook(id);
     model.addAttribute("book", book);
     return "show.jsp";
@@ -159,9 +163,8 @@ public class HomeController {
 
   // ***************************DELETE***************************
   @DeleteMapping("/books/delete/{id}")
-  public String delete(@PathVariable("id")Long id){
-    Book book = bookService.oneBook(id);
-    bookService.deleteBook(book);
+  public String delete(@PathVariable("id")Long id, HttpSession session){
+    bookService.deleteBook(id);
     return "redirect:/books";
   
   }

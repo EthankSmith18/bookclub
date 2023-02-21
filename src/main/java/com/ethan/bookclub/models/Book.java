@@ -27,7 +27,7 @@ public class Book {
 
 private Long id;
 @NotNull
-@Size(min = 1, max = 25, message = "Title must be between 1 and 25 characters.")
+@Size(min = 1,  message = "Title must not be blank.")
 private String title;
 @NotNull
 @Size(min = 1, max = 25, message = "Author must be between 1 and 25 characters.")
