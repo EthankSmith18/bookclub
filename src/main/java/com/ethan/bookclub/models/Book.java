@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,8 +27,7 @@ public class Book {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
 
 private Long id;
-@NotNull
-@Size(min = 1,  message = "Title must not be blank.")
+@NotBlank
 private String title;
 @NotNull
 @Size(min = 1, max = 25, message = "Author must be between 1 and 25 characters.")

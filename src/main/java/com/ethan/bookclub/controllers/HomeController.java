@@ -116,8 +116,8 @@ public class HomeController {
     }
   }
 
-  @RequestMapping("/books/new")
-  public String newBook(@ModelAttribute("book") Book book, BindingResult result, HttpSession session){
+  @GetMapping("/books/new")
+  public String newBook(@ModelAttribute("book") Book book, HttpSession session){
     if(session.getAttribute("userId")==null){
       return "redirect:/";
     }
